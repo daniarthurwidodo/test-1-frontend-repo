@@ -1,14 +1,25 @@
+"use client";
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Image from "next/image";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from './store/store';
+import { increment, decrement } from './store/slices/exampleSlice';
 
 export default function Home() {
+  const dispatch = useDispatch();
+  const value = useSelector((state: RootState) => state.example.value);
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Button variant="contained" color="primary">
-          Hello MUI
+        <Button variant="contained" color="primary" onClick={() => dispatch(increment())}>
+          Increment
         </Button>
+        <Button variant="contained" color="secondary" onClick={() => dispatch(decrement())}>
+          Decrement
+        </Button>
+        <p>Value: {value}</p>
         <Image
           className="dark:invert"
           src="/next.svg"
